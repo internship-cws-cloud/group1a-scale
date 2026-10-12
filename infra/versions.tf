@@ -6,12 +6,12 @@ terraform {
       version = "~> 5.60"
     }
   }
- 
+
   backend "s3" {
-    bucket         = "group1a-tfstate-953305038374"   # YOUR bucket
+    bucket         = "group1a-tfstate-953305038374" # YOUR bucket
     key            = "infra/terraform.tfstate"
     region         = "eu-west-1"
-    dynamodb_table = "group1a-tflock"                 # YOUR table
+    dynamodb_table = "group1a-tflock" # YOUR table
     encrypt        = true
   }
 

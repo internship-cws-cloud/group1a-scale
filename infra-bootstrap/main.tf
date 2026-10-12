@@ -67,7 +67,7 @@ resource "aws_iam_openid_connect_provider" "github" {
   thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
 }
 locals {
-  repo = "${var.github_org}/${var.github_repo}"
+  repo = "${var.github_org}@328541269/${var.github_repo}@1367829429"
 }
  
 data "aws_iam_policy_document" "plan_trust" {

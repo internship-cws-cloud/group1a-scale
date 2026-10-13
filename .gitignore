@@ -1,3 +1,7 @@
+*tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
 # Terraform state holds every value it touched, in plaintext. Never commit it.
 *.tfstate
 *.tfstate.*

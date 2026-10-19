@@ -1,0 +1,5 @@
+Deploy an app in two containers, and make both containers runs in two different availability groups, both containers should always be in healthy state to prevent failure or downtime in the app, i will create the containers in two availilability groups and deploy the app.
+I then increased the load on the dashboard to increase traffic on my containers, to anable the task count increase from 2 to 4, this is where auto-scaling comes in and increased my containers from 2 to 4 between the 2 different availability zones to improve effeciency and low latency in the app.
+In order to check and validate whether the auto-scaling i enabled is working effectively, i stoped one Task on aws ecs manually to confirm to see it create a new container automatically and replace the stopped task without my intervention.
+I then merged this change on github, and it deploys in the pipeline while the load test on app still runs without failing.
+I go back to my /infra directory in my local machine and destroy the app with terraform while the pipeline rebuilds all the systems again.

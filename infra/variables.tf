@@ -22,4 +22,8 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+variable "desired_count" {
+  type    = number
+  default = 2
+}
 

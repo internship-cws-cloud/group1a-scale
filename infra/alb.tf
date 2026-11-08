@@ -7,11 +7,10 @@ resource "aws_lb" "web" {
 }
 resource "aws_lb_target_group" "web" {
   name     = "${var.group_name}-tg"
-  port     = var.container_port
+  port     = 8080
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
-  # MUST be "ip" for Fargate. "instance" is the default and it
-  # fails in a way that looks like a health check problem.
+  # MUST be "ip" for Fargate. "instance" is the default and it fails in a way that looks like a health check problem.
   target_type = "ip"
   health_check {
     path                = "/health"

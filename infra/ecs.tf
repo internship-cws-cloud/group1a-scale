@@ -58,11 +58,12 @@ resource "aws_ecs_cluster" "main" {
   name = "${var.group_name}-cluster"
 }
 resource "aws_ecs_service" "web" {
-  name            = "${var.group_name}-svc"
-  cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.web.arn
-  desired_count   = 2
-  launch_type     = "FARGATE"
+  name                              = "${var.group_name}-svc"
+  cluster                           = aws_ecs_cluster.main.id
+  task_definition                   = aws_ecs_task_definition.web.arn
+  desired_count                     = var.desired_count
+  launch_type                       = "FARGATE"
+  health_check_grace_period_seconds = 60
   network_configuration {
     subnets          = data.aws_subnets.default.ids
     security_groups  = [aws_security_group.app.id]
@@ -74,5 +75,15 @@ resource "aws_ecs_service" "web" {
     container_port   = var.container_port
   }
   # the listener must exist before the service registers targets
+  lifecycle {
+    ignore_changes = [desired_count]
+  }
   depends_on = [aws_lb_listener.http]
+
+  deployment_minimum_healthy_percent = 100 # never go below the current count
+  deployment_maximum_percent         = 200 # may temporarily run double
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true # a deployment that never goes healthy is automatically put back
+  }
 }

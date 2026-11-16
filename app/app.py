@@ -272,6 +272,13 @@ def health():
         uptime_seconds=int(time.time() - STARTED),
     )
 
+@app.route("/burn")
+def burn():
+    x = 0
+    for i in range(5_000_000):
+        x += i * i
+    return "done"
+
 
 @app.route("/metrics")
 def metrics():
